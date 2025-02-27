@@ -1,0 +1,65 @@
+format = """
+[ ](#4b4b6d)\
+[ 󱁕 ](bg:#4b4b6d fg:#dbd9cd)\
+[](bg:#75919b fg:#4b4b6d)\
+$directory\
+[](fg:#788f9a bg:#49251e)\
+$git_branch\
+[](bg:#cd5e56 fg:#49251e)\
+$git_status\
+[](fg:#cd5e56 bg:#dfb980)\
+$nodejs\
+$rust\
+$golang\
+$php\
+[](fg:#dfb980 bg:#dbd9cd)\
+$time\
+[ ](fg:#dbd9cd)\
+\n$character"""
+
+[directory]
+style = "fg:#e3e5e5 bg:#75919b"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:#000000"
+format = '[[ $symbol $branch ](fg:#dbd9cd bg:#49251e)]($style)'
+
+[git_status]
+style = "bg:#394260"
+format = '[[($all_status$ahead_behind )](fg:#000000 bg:#cd5e56)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[php]
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#48221d"
+format = '[[  $time ](fg:#3c3c57 bg:#dbd9cd)]($style)'
