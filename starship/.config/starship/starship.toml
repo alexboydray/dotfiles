@@ -1,65 +1,90 @@
 format = """
-[ ](#4b4b6d)\
-[ 󱁕 ](bg:#4b4b6d fg:#dbd9cd)\
-[](bg:#75919b fg:#4b4b6d)\
+[╭╴](italic #ffffff)\
+[░▒](#464469)\
+[ 󱁕 ](bg:#464469 fg:#dbd9cd)\
+[](bg:#678d98 fg:#464469)\
 $directory\
-[](fg:#788f9a bg:#49251e)\
+[](fg:#678d98 bg:#49251e)\
 $git_branch\
-[](bg:#cd5e56 fg:#49251e)\
+[](bg:#c82d33 fg:#49251e)\
 $git_status\
-[](fg:#cd5e56 bg:#dfb980)\
+[](fg:#c82d33 bg:#dd837b)\
+$git_commit\
+[](fg:#dd837b bg:#e1b884)\
 $nodejs\
 $rust\
 $golang\
 $php\
-[](fg:#dfb980 bg:#dbd9cd)\
+$python\
+[](fg:#e1b884 bg:#dbd9cd)\
+${custom.time}\
 $time\
 [ ](fg:#dbd9cd)\
 \n$character"""
 
 [directory]
-style = "fg:#e3e5e5 bg:#75919b"
+read_only = ''
+style = "bold fg:#e3e5e5 bg:#678d98"
 format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+truncation_length = 0
+truncation_symbol = ""
+truncate_to_repo = false
+
 
 [directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
+"Documents" = "󰧮 "
+"Downloads" = "󰇚 "
+"Music" = " "
 "Pictures" = " "
 
 [git_branch]
 symbol = ""
-style = "bg:#000000"
-format = '[[ $symbol $branch ](fg:#dbd9cd bg:#49251e)]($style)'
+style = "bg:#49251e"
+format = '[[ $symbol $branch ](italic fg:#dbd9cd bg:#49251e)]($style)'
 
 [git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#000000 bg:#cd5e56)]($style)'
+style = "bg:#c82d33"
+format = '[[($all_status$ahead_behind)](bold fg:#ffffff bg:#c82d33)]($style)'
+
+[git_commit]
+commit_hash_length = 5
+only_detached = false
+tag_disabled = false
+style = "italic fg:#ffffff bg:#dd837b"  
+format = '[ $tag…$hash]($style)'
 
 [nodejs]
 symbol = ""
 style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+format = '[[ $symbol ($version) ](fg:#000000 bg:#dbd9cd)]($style)'
 
 [rust]
 symbol = ""
 style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+format = '[[ $symbol ($version) ](fg:#000000 bg:#dbd9cd)]($style)'
 
 [golang]
 symbol = ""
 style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+format = '[[ $symbol ($version) ](fg:#000000 bg:#dbd9cd)]($style)'
 
 [php]
 symbol = ""
 style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+format = '[[ $symbol ($version) ](fg:#000000 bg:#dbd9cd)]($style)'
+
+[custom.time]
+command = 'echo  '
+when = true
+format = '[ $output ](fg:#3c3576 bg:#dbd9cd)'
 
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#48221d"
-format = '[[  $time ](fg:#3c3c57 bg:#dbd9cd)]($style)'
+#format = "[\\e]10;Terminus Nerd Font\\e\\ $time](fg:#3c3c57 bg:#dbd9cd)[$style]"
+format = '[[$time](italic fg:#3c3c57 bg:#dbd9cd)]($style)'
+
+[character]
+success_symbol = "[╰─](italic)"
+error_symbol = "[╰─](italic)"
