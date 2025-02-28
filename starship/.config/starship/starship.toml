@@ -82,7 +82,6 @@ format = '[ $output ](fg:#3c3576 bg:#dbd9cd)'
 disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#48221d"
-#format = "[\\e]10;Terminus Nerd Font\\e\\ $time](fg:#3c3c57 bg:#dbd9cd)[$style]"
 format = '[[$time](italic fg:#3c3c57 bg:#dbd9cd)]($style)'
 
 [character]
