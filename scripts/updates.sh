@@ -16,50 +16,39 @@ if [ $instance_count -gt 1 ]; then
     sleep $instance_count
 fi
 
-
 # ----------------------------------------------------- 
-# Define threshholds for color indicators
+# Define thresholds for color indicators
 # ----------------------------------------------------- 
 
 threshhold_green=0
 threshhold_yellow=25
 threshhold_red=100
-install_platform="$(cat ~/.config/ml4w/settings/platform.sh)"
 
-# Check if platform is supported
-case $install_platform in
-    arch)
-        aur_helper="$(cat ~/.config/ml4w/settings/aur.sh)"
+# ----------------------------------------------------- 
+# Arch Linux: Define AUR Helper
+# ----------------------------------------------------- 
 
-        # ----------------------------------------------------- 
-        # Calculate available updates
-        # ----------------------------------------------------- 
+aur_helper="yay"
 
-        # flatpak remote-ls --updates
+# ----------------------------------------------------- 
+# Calculate available updates
+# ----------------------------------------------------- 
 
-        # -----------------------------------------------------------------------------
-        # Check for pacman or checkupdates-with-aur database lock and wait if necessary
-        # -----------------------------------------------------------------------------
-        check_lock_files() {
-            local pacman_lock="/var/lib/pacman/db.lck"
-            local checkup_lock="${TMPDIR:-/tmp}/checkup-db-${UID}/db.lck"
+# -----------------------------------------------------------------------------
+# Check for pacman or checkupdates-with-aur database lock and wait if necessary
+# -----------------------------------------------------------------------------
+check_lock_files() {
+    local pacman_lock="/var/lib/pacman/db.lck"
+    local checkup_lock="${TMPDIR:-/tmp}/checkup-db-${UID}/db.lck"
 
-            while [ -f "$pacman_lock" ] || [ -f "$checkup_lock" ]; do
-                sleep 1
-            done
-        }
+    while [ -f "$pacman_lock" ] || [ -f "$checkup_lock" ]; do
+        sleep 1
+    done
+}
 
-        check_lock_files
+check_lock_files
 
-        updates=$(checkupdates-with-aur | wc -l)
-    ;;
-    fedora)
-        updates=$(dnf check-update -q | grep -c ^[a-z0-9])
-    ;;
-    *)
-        updates=0
-    ;;
-esac
+updates=$(checkupdates-with-aur | wc -l)
 
 # ----------------------------------------------------- 
 # Output in JSON format for Waybar Module custom-updates
@@ -80,3 +69,4 @@ if [ "$updates" -gt $threshhold_green ]; then
 else
     printf '{"text": "0", "alt": "0", "tooltip": "No updates available", "class": "green"}'
 fi
+
