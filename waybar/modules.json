@@ -1,0 +1,342 @@
+// __        __          _                 
+// \ \      / /_ _ _   _| |__   __ _ _ __  
+//  \ \ /\ / / _` | | | | '_ \ / _` | '__| 
+//   \ V  V / (_| | |_| | |_) | (_| | |    
+//    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    
+//                 |___/                   
+ 
+//====================================================
+// LEFT SIDE
+//====================================================
+
+{
+	// Rofi Application Launcher
+	"custom/appmenu": {
+		// START APPS LABEL
+		"format": "应用",
+		// END APPS LABEL
+		"on-click": "sleep 0.2;pkill rofi || rofi -show drun -replace",
+		"on-click-right": "~/.dotfiles/scripts/keybindings.sh",
+		"tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
+	},
+
+	// Workspaces
+	"hyprland/workspaces": {
+		"on-scroll-up": "hyprctl dispatch workspace r-1",
+		"on-scroll-down": "hyprctl dispatch workspace r+1",
+		"on-click": "activate",
+		"active-only": false,
+		"all-outputs": true,
+		"format": "{}",
+		"format-icons": {
+			"urgent": "",
+			"active": "",
+			"default": ""
+		},
+		"persistent-workspaces": {
+			"*": 5
+		}
+	},
+
+	// Group Links
+	"group/links": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/chatgpt",
+			"custom/empty"
+		]
+	},
+
+	// ChatGPT Launcher
+	"custom/chatgpt": {
+		"format": " ",
+		"on-click": "chatgpt-desktop",
+		"tooltip-format": "AI Support
+	},
+
+	// Empty
+	"custom/empty": {
+		"format": ""
+	},
+
+	// Quicklink Group
+	"group/quicklinks": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/quicklink_browser",
+			"custom/quicklink_firefox",
+			"custom/quicklink_filemanager",
+			// Don't remove the quicklinkempty
+			"custom/quicklinkempty"
+		]
+	},
+
+	// Quicklink Browser
+	"custom/quicklink_browser": {
+		"format": "",
+		"on-click": "zen-browser",
+		"tooltip-format": "Open Browser"
+	},
+
+	// Quicklink File Manager
+	"custom/quicklink_filemanager": {
+		"format": "",
+		"on-click": "nautilus",
+		"tooltip-format": "Open Filemanager"
+	},
+
+	// Quicklink Kitty Terminal
+	"custom/quicklink_firefox": {
+		"format": "",
+		"on-click": "kitty",
+		"tooltip-format": "Open Kitty Terminal"
+	},
+
+	// Quicklink Empty
+	"custom/quicklinkempty": {},
+
+//====================================================
+// MIDDLE
+//====================================================
+
+	// Hyprland Window
+	"hyprland/window": {
+		"rewrite": {
+			"(.*) - Brave": "$1",
+			"(.*) - Chromium": "$1",
+			"(.*) - Brave Search": "$1",
+			"(.*) - Outlook": "$1",
+			"(.*) Microsoft Teams": "$1"
+		},
+		"separate-outputs": true
+	},
+
+//====================================================
+// RIGHT SIDE
+//====================================================
+
+	// Backlight
+	"backlight": {
+		"format": "{icon} {percent}%",
+		"format-icons": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+		"scroll-step": 1
+	},
+
+	// Updates Count
+	"custom/updates": {
+		"format": "  {}",
+		"escape": true,
+		"return-type": "json",
+		"exec": "~/.dotfiles/scripts/updates.sh",
+		"interval": 1800,
+		"on-click": "~/.dotfiles/scripts/installupdates.sh",
+		"on-click-right": "kitty --class dotfiles-floating -e pacseek"
+	},
+
+	// Pulseaudio
+	"pulseaudio": {
+		// "scroll-step": 1, // %, can be a float
+		"format": "{icon}  {volume}%",
+		"format-bluetooth": "{volume}% {icon} {format_source}",
+		"format-bluetooth-muted": " {icon} {format_source}",
+		"format-muted": " {format_source}",
+		"format-source": "{volume}% ",
+		"format-source-muted": "",
+		"format-icons": {
+			"headphone": " ",
+			"hands-free": " ",
+			"headset": " ",
+			"phone": " ",
+			"portable": " ",
+			"car": " ",
+			"default": ["", "", ""]
+		},
+		"on-click": "pavucontrol"
+	},
+
+	// Bluetooth
+	"bluetooth": {
+		"format": " {status}",
+		"format-disabled": "",
+		"format-off": "",
+		"interval": 30,
+		"on-click": "blueman-manager",
+		"format-no-controller": ""
+	},
+
+	// Network
+	"network": {
+		"format": "{ifname}",
+		"format-wifi": " {essid} ({signalStrength}%)",
+		"format-ethernet": "  {ifname}",
+		"format-disconnected": "Disconnected ⚠",
+		"tooltip-format": " {ifname} via {gwaddri}",
+		"tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+		"tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+		"tooltip-format-disconnected": "Disconnected",
+		"max-length": 50,
+		"on-click": "kitty --class dotfiles-floating -e nmtui",
+	},
+
+	// Battery
+	"battery": {
+		"states": {
+			// "good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{icon} {capacity}%",
+		"format-charging": "  {capacity}%",
+		"format-plugged": "  {capacity}%",
+		"format-alt": "{icon}  {time}",
+		// "format-good": "", // An empty format will hide the module
+		// "format-full": "",
+		"format-icons": [" ", " ", " ", " ", " "]
+	},
+
+	// Power Profiles Daemon
+	"power-profiles-daemon": {
+		"format": "{icon}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"tooltip": true,
+		"format-icons": {
+			"default": "",
+			"performance": "",
+			"balanced": "",
+			"power-saver": ""
+		}
+	},
+
+	// Group Hardware
+	"group/hardware": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 300,
+			"children-class": "not-memory",
+			"transition-left-to-right": false
+		},
+		"modules": ["custom/system", "disk", "cpu", "memory"]
+	},
+
+	// System
+	"custom/system": {
+		"format": "",
+		"tooltip": false
+	},
+
+	// Disk Space
+	"disk": {
+		"interval": 30,
+		"format": " {percentage_used}% ",
+		"path": "/",
+		"on-click": "kitty --class dotfiles-floating -e htop"
+	},
+
+	// CPU
+	"cpu": {
+		"format": "/   {usage}% ",
+		"on-click": "kitty --class dotfiles-floating -e htop"
+	},
+
+	// Memory
+	"memory": {
+		"format": "/  {}% ",
+		"on-click": "kitty --class dotfiles-floating -e htop"
+	},
+
+	// Group Tools
+	"group/tools": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 300,
+			"children-class": "not-memory",
+			"transition-left-to-right": false
+		},
+		"modules": [
+			"custom/tools",
+			"custom/cliphist",
+			"custom/hypridle",
+			"custom/hyprshade"
+		]
+	},
+
+	// Tools
+	"custom/tools": {
+		"format": "",
+		"tooltip-format": "Tools"
+	},
+
+	// Cliphist
+	"custom/cliphist": {
+		"format": "",
+		"on-click": "sleep 0.1 && ~/.dotfiles/scripts/cliphist.sh",
+		"on-click-right": "sleep 0.1 && ~/.dotfiles/scripts/cliphist.sh d",
+		"on-click-middle": "sleep 0.1 && ~/.dotfiles/scripts/cliphist.sh w",
+		"tooltip-format": "Left: Open clipboard Manager\nRight: Delete an entry\nMiddle: Clear list"
+	},
+
+	// Hypridle inhibitor
+	"custom/hypridle": {
+		"format": "",
+		"return-type": "json",
+		"escape": true,
+		"exec-on-event": true,
+		"interval": 60,
+		"exec": "~/.dotfiles/scriptshypridle.sh status",
+		"on-click": "~/.dotfiles/scripts/hypridle.sh toggle"
+	},
+
+	// Hyprshade
+	"custom/hyprshade": {
+		"format": "",
+		"tooltip-format": "Toggle Screen Shader",
+		"on-click": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh",
+		"on-click-right": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh rofi"
+	},
+
+	// SwayNC
+	"custom/notification": {
+		"tooltip-format": "Left: Notifications\nRight: Do not disturb",
+		"format": "{icon}",
+		"format-icons": {
+			"notification": "<span foreground='red'><sup></sup></span>",
+			"none": "",
+			"dnd-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-none": "",
+			"inhibited-notification": "<span foreground='red'><sup></sup></span>",
+			"inhibited-none": "",
+			"dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-inhibited-none": ""
+		},
+		"return-type": "json",
+		"exec-if": "which swaync-client",
+		"exec": "swaync-client -swb",
+		"on-click": "swaync-client -t -sw",
+		"on-click-right": "swaync-client -d -sw",
+		"escape": true
+	},
+
+	// Exit Menu
+	"custom/exit": {
+		"format": "",
+		"on-click": "~/.dotfilesscripts/wlogout.sh",
+		"on-click-right": "hyprlock",
+		"tooltip-format": "Left: Power menu\nRight: Lock screen"
+	},
+
+	// ML4W Welcome App
+	"custom/ml4w-welcome": {
+		"on-click": "flatpak run com.ml4w.sidebar",
+		"format": " ",
+		"tooltip-format": "Open ML4W Sidebar App"
+	},
+
+	// Clock
+	"clock": {
+		"format": "{:%I:%M %p}",
+		"on-click": "flatpak run com.ml4w.calendar",
+		"timezone": "",
+		"tooltip": false
+	}
+}
+
